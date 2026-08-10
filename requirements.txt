@@ -1,3 +1,4 @@
 torch
 ipykernel
 scikit-learn
+pandas
