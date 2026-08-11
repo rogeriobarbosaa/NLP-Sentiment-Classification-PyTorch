@@ -19,8 +19,8 @@ def token_outlier(df, column):
 
     iqr = q3 - q1
 
-    upper_limit = q1 - 1.5*iqr
-    lower_limit = q3 + 1.5*iqr
+    lower_limit = q1 - 1.5*iqr
+    upper_limit = q3 + 1.5*iqr
 
     outliers = (df[column] < lower_limit) | (df[column] > upper_limit)
 
