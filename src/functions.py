@@ -1,20 +1,14 @@
-import nltk
 from nltk.corpus import stopwords
 import string
 
 # usar com .apply()
 def remove_stopwords_punctuation(text):
-    # adiciona pacotes de stopwords e pontuação
-    nltk.download("stopwords")
-    nltk.download("punkt")
-    nltk.download("punkt_tab")
-
     # remove stopwords
     stops = stopwords.words("portuguese")
     no_stopwords = [p for p in text if p not in stops]
 
     # remove pontuação
-    puncts = string.punctuation()
+    puncts = string.punctuation
     no_punctuation = [p for p in no_stopwords if p not in puncts]
 
     return no_punctuation
