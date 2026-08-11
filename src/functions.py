@@ -13,15 +13,15 @@ def remove_stopwords_punctuation(text):
 
     return no_punctuation
 
-def token_outlier(column):
-    q1 = column.quantile(0.25)
-    q3 = column.quantile(0.75)
+def token_outlier(df, column):
+    q1 = df[column].quantile(0.25)
+    q3 = df[column].quantile(0.75)
 
     iqr = q3 - q1
 
-    upper_limit = column - 1.5*iqr
-    lower_limit = column + 1.5*iqr
+    upper_limit = q1 - 1.5*iqr
+    lower_limit = q3 + 1.5*iqr
 
-    outliers = column < lower_limit | column > upper_limit
+    outliers = (df[column] < lower_limit) | (df[column] > upper_limit)
 
     return outliers
