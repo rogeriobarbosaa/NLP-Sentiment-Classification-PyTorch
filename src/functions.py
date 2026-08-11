@@ -25,3 +25,16 @@ def token_outlier(df, column):
     outliers = (df[column] < lower_limit) | (df[column] > upper_limit)
 
     return outliers
+
+def remove_outliers(df, column):
+    q1 = df[column].quantile(0.25)
+    q3 = df[column].quantile(0.75)
+
+    iqr = q3 - q1
+
+    lower_limit = q1 - 1.5*iqr
+    upper_limit = q3 + 1.5*iqr
+
+    no_outliers = (df[column] >= lower_limit) | (df[column] <= upper_limit)
+
+    return no_outliers
