@@ -35,6 +35,6 @@ def remove_outliers(df, column):
     lower_limit = q1 - 1.5*iqr
     upper_limit = q3 + 1.5*iqr
 
-    no_outliers = (df[column] >= lower_limit) | (df[column] <= upper_limit)
+    no_outliers = df[(df[column] >= lower_limit) & (df[column] <= upper_limit)]
 
     return no_outliers
