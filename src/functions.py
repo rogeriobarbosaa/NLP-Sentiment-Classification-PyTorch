@@ -40,8 +40,14 @@ def remove_outliers(df, column):
 
     return no_outliers
 
+# usar com .apply()
 def lematiza_tokens(tokens, nlp):
     doc = Doc(nlp.vocab, words=tokens)  # usa tokens, sem re-tokenizar
     for pipe_name in nlp.pipe_names:
         doc = nlp.get_pipe(pipe_name)(doc)
     return [token.lemma_ for token in doc]
+
+# usar com .apply()
+def embedding_w2v(tokens, w2v):
+    vector = [w2v.wv[token] for token in tokens]
+    return vector
