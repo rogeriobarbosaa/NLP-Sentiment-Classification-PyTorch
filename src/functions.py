@@ -1,5 +1,6 @@
 from nltk.corpus import stopwords
 import string
+from spacy.tokens import Doc
 
 # usar com .apply()
 def remove_stopwords_punctuation(text):
@@ -38,3 +39,9 @@ def remove_outliers(df, column):
     no_outliers = df[(df[column] >= lower_limit) & (df[column] <= upper_limit)]
 
     return no_outliers
+
+def lematiza_tokens(tokens, nlp):
+    doc = Doc(nlp.vocab, words=tokens)  # usa tokens, sem re-tokenizar
+    for pipe_name in nlp.pipe_names:
+        doc = nlp.get_pipe(pipe_name)(doc)
+    return [token.lemma_ for token in doc]
