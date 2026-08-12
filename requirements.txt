@@ -3,3 +3,4 @@ ipykernel
 scikit-learn
 pandas
 nltk
+imblearn
