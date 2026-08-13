@@ -1,6 +1,7 @@
 from nltk.corpus import stopwords
 import string
 from spacy.tokens import Doc
+import torch
 
 # usar com .apply()
 def remove_stopwords_punctuation(text):
@@ -57,3 +58,17 @@ def embedding_ft(tokens, ft):
         except KeyError:
             continue
     return vector
+
+def salva_embeddings(X, y, x_path, y_path, vector_size=100):
+    # cada review vira uma sequência (seq_len, vector_size); linhas sem token viram um vetor de zeros pra não quebrar o pad_sequence
+    sequences = [
+        torch.tensor(row, dtype=torch.float32)
+        if len(row) > 0
+        else torch.zeros((1, vector_size), dtype=torch.float32)
+        for row in X['review_embedding']
+    ]
+    X_padded = torch.nn.utils.rnn.pad_sequence(sequences, batch_first=True)
+    y_tensor = torch.tensor(y.values, dtype=torch.long)
+
+    torch.save(X_padded, x_path)
+    torch.save(y_tensor, y_path)
