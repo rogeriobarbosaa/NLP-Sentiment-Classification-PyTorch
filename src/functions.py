@@ -48,6 +48,12 @@ def lematiza_tokens(tokens, nlp):
     return [token.lemma_ for token in doc]
 
 # usar com .apply()
-def embedding_w2v(tokens, w2v):
-    vector = [w2v.wv[token] for token in tokens]
+def embedding_ft(tokens, ft):
+    # o FastText monta o vetor pelos n-gramas, então cobre palavras inéditas; o try protege o caso raro de nenhum n-grama ser conhecido
+    vector = []
+    for token in tokens:
+        try:
+            vector.append(ft.wv[token])
+        except KeyError:
+            continue
     return vector
